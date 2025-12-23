@@ -18,6 +18,7 @@ func LoadConfig() error {
 	if err != nil {
 		return fmt.Errorf("Config validation failed: %v", err)
 	}
+	activeConfig = loadedConfig
 	return nil
 }
 
