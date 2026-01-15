@@ -2,6 +2,7 @@ package serviceconfiglib
 
 import (
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -13,6 +14,11 @@ func LoadConfig() error {
 	loadedConfig.AppName = os.Getenv("SERVICE_CONFIG_APP_NAME")
 	loadedConfig.ApiRootUrl = os.Getenv("SERVICE_CONFIG_API_ROOT_URL")
 	loadedConfig.ServiceName = os.Getenv("SERVICE_CONFIG_SERVICE_NAME")
+	loadedConfig.DebugBypassAuthMiddleware = os.Getenv("DEBUG_BYPASS_AUTH_MIDDLEWARE") == "true"
+
+	if loadedConfig.DebugBypassAuthMiddleware {
+		log.Println("\033[1;31mWARNING: DEBUG_BYPASS_AUTH_MIDDLEWARE is enabled.\033[0m")
+	}
 
 	err := ValidateConfig(loadedConfig)
 	if err != nil {
